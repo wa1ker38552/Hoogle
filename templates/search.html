@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Hoogle</title>
+    <link rel="icon" href="static/assets/favicon.png">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+  </head>
+  <body>
+    <form action="/search" method="POST">
+      <div>
+        <a href="/"><img class="topLeftIcon" alt="hoogle" src="static/assets/hoogle trspt.png"></a>
+        <input class="searchBar" style="top: -4.5vh;" type="text" name="address" autocomplete="off" placeholder="Search Hoogle or type a address" value="{{data['query']}}">
+      </div>
+    </form>
+    <div class="resultsAbout">
+      About {{data['num']}} 
+      {% if data['num'] == 1 %}
+        result
+      {% else %}
+        results
+      {% endif %}
+      ({{data['time']}} seconds)
+    </div>
+    {% for item in data['results'] %}
+      <div class="resultsContainer">
+        <div class="resultStat">
+          {{item['country']}} > {{item.state}} > {{item.city}}
+        </div>
+        <a class="resultTitle" href="/search?d={{item.display}}&zpid={{item.zpid}}&query={{data['query']}}">
+          {{item['display']}}
+        </a>
+      </div>
+    {% endfor %}
+    <div class="resultEnd">
+      End of results for {{data['query']}}
+    </div>
+  </body>
+</html>
